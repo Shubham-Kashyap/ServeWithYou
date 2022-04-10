@@ -26,7 +26,7 @@ Route::namespace ('api')->group(function () {
 	Route::post("verify-phone_no/", "UserController@verifyPhoneNo");
 	Route::post("send_otp_again/", "UserController@sendAgain");
 	Route::post("forgot-password", "ForgotPasswordController@sendResetLinkEmail");
-	Route::get("get-profile", "UserController@getProfile");
+	Route::post("get-profile", "UserController@getProfile");
 	Route::post("update-profile", "UserController@updateProfile");
 	Route::post("add-products", "ProductsController@addProducts");
 	Route::get("get-available-catagories", "ProductsController@getAvailableCatagories");
