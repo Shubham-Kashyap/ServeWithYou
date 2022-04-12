@@ -25,7 +25,7 @@ Route::get('/', function () {
  * ADMIN DEFINED ROUTES
  * ------------------------------------------------------------------------
  */
-Route::prefix('admin')->namespace('App\Http\Controllers\Admin')->group(function(){
+Route::prefix('admin')->namespace('Admin')->group(function(){
    
     Route::match(['get','post'],'login','AdminController@adminLogin');
     Route::group(['middleware' => 'admin'],function(){
