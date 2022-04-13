@@ -18,21 +18,7 @@ use DB;
 
 class ConsumerController extends Controller
 {
-    /**
-     * ------------------------------------------------------------
-     * CONSUMER CONTROLLER
-     * ------------------------------------------------------------
-     * All the functionalities related to consumer and functionality
-     * performed by consumer on consumer homescreen are all lies here
-     * 
-     * ------------------------------------------------------------
-     */
-
-     /**
-     * -----------------------------------------------------------
-     * INSERT CATEGORY API --  FOR ADMIN USER ONLY
-     * -----------------------------------------------------------
-     */
+    
     public function consumerCategory(Request $request){
         $val = Validator::make($request->all(),[
             // rules for validation

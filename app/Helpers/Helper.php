@@ -10,7 +10,6 @@ use App\Jobs;
 use App\Notification;
 use App\ProviderNotification;
 Use App\RejectedJobs;
-use App\Subadmin;
 use Auth;
 use DB;
 
@@ -28,20 +27,8 @@ class Helper{
             }
             return $admin_image;
         }
-        if(Auth::guard('subadmin')->check()){
-            $id = Auth::guard('subadmin')->user()->id;
-            // dd($id);
-            if(Auth::guard('subadmin')->user()->image){
-                $admin_image = url('/').'/images/subadmin_images/id-'.$id.'/'.Auth::guard('subadmin')->user()->image;
-            }
-            else{
-                $admin_image = url('/').'/images/user_images/dummy.jpg';
-            }
-            return $admin_image;
-        }
+       
 
-        
-        // return url('images/admin_images').'/'.$admin_image;
     }
     public static function adminName(){
         if(Auth::guard('admin')->check()){
@@ -49,18 +36,12 @@ class Helper{
             $last_name = Auth::guard('admin')->user()->last_name;
             return $first_name.' '.$last_name;
         }
-        if(Auth::guard('subadmin')->check()){
-            $name = Auth::guard('subadmin')->user()->name;
-            return $name;
-        }
+        
         
         
     }
-
     public static function memberSince(){
-        if(Auth::guard('subadmin')->check()){
-            return Auth::guard('subadmin')->user()->created_at;
-        }
+
         if(Auth::guard('admin')->check()){
             return Auth::guard('admin')->user()->created_at;
         }
@@ -147,17 +128,6 @@ class Helper{
         $data = RejectedJobs::where('provider_id',$provider_id)->where('consumer_id',$consumer_id)->where('job_status','rejected')->count();
         return $data;
     }
-    public static function stripeApiKey(){ //  stripe payment
-        // $key = "sk_test_51HWcPnA5jUuWXi6UzL7fX0K9xfSHuprK00BjCXYvuWM8eRQcKnEhReL4SMPCbKAF7xaNZDX8rbNE0sNwlyNgvOdp00Qh4DU1Lo";
-        $key = "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";
-        return $key;
-    }
-    public static function firebaseServerKey(){
-        // $key = "AAAAjd1gY-Y:APA91bESpI_jZznUEbUEijJdlEhOM4PRSOFm29TT44EEeYlHlzX6I6wv0jPeE8QtaAJQJfs1IBLAPjWV-5skGnF0dusEihh_t0A1RyTy8sP9J6d2oNFLcoPtWd7_R1qwfeWNR3zUg1Wj";
-        // $key = "AAAA408zToc:APA91bGVVf79AS99hd0jjycWx3w6IXnVMhvfgG90__ttcKeRKFqUDVoDdNTcgeH2QjyEETrTz6w3wW_LGIzbfHqXBAHiLgWZfg7Z7wPyWWcfqFJsnT_gkGAGf-8W9RRJtkIZlzRdD0ud";
-        $key = "AAAA408zToc:APA91bGVVf79AS99hd0jjycWx3w6IXnVMhvfgG90__ttcKeRKFqUDVoDdNTcgeH2QjyEETrTz6w3wW_LGIzbfHqXBAHiLgWZfg7Z7wPyWWcfqFJsnT_gkGAGf-8W9RRJtkIZlzRdD0ud";
-        return $key;
-    }
     public static function deviceToken($id){
         $user_id = Jobs::where('id',$id)->first()->consumer_id;
         return User::where('id',$user_id)->first()->device_token;
@@ -171,29 +141,11 @@ class Helper{
             'Authorization: key=' . $server_key,
             'Content-Type: application/json',
         ];
-        /**
-         * --------------------------------
-         * notification_body example
-         * --------------------------------
-         * $notification_body = array(
-		 *			'title' => 'user name of a user' 
-		 *			'image' =>  'image of the user' ,
-		 *			"body" => " hi this is testing",
-         */
-        /**
-         * --------------------------------
-         * data example
-         * --------------------------------
-         * $data = array(
-		 *			'title' => 'user name of a user' 
-		 *			'image' =>  'image of the user' ,
-		 *			"body" => " hi this is testing",
-         */
-        // data should be received in array format 
+        
         $data = [
             'to' => $device_token,
             'notification' =>$notification_body,
-            // 'data'=> array('message'=>'your request is accepted'),
+            
             'priority'=>'high',
         ];
         $ch = curl_init();
@@ -289,13 +241,5 @@ class Helper{
                     ->orderBy('company_name','ASC')
                     ->get();
     }
-    /**
-     * ----------------------------------------------------------------
-     * Get company Data
-     * ----------------------------------------------------------------
-     */
-    public static function getCompanyData($id){
-        $data = DB::table('companies')->where('id', $id)->first();
-        return $data;
-    }
+    
 }

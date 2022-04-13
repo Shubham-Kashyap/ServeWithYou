@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/app/Helpers
 .env
 .env.backup
 .phpunit.result.cache

@@ -19,13 +19,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('/provider/signup','Api\UserController@ProviderSignup');
 Route::post('/consumer/signup','Api\UserController@ConsumerSignup');
-Route::namespace ('api')->group(function () {
+Route::namespace ('Api')->group(function () {
+
+
+
+Route::post('/provider/signup','Api\UserController@ProviderSignup');
+Route::post('/consumer/signup','Api\UserController@ConsumerSignup');
+
+Route::group(['middleware' => ['userLogin']], function (){
+    Route::post('login','Api\UserController@userLogin');
+});
 	//USER CONTROLLER ROUTES
 	Route::post("register/", "UserController@register");
 	Route::post("login/", "UserController@login");
 	Route::post("signup-with-phone-no/", "UserController@signupWithMobileNo");
-	Route::post("verify-phone_no/", "UserController@verifyPhoneNo");
-	Route::post("send_otp_again/", "UserController@sendAgain");
 	Route::post("forgot-password", "ForgotPasswordController@sendResetLinkEmail");
 	Route::post("get-profile", "UserController@getProfile");
 	Route::post("update-profile", "UserController@updateProfile");
@@ -36,13 +43,6 @@ Route::namespace ('api')->group(function () {
 
 
 
-Route::post('/provider/signup','Api\UserController@ProviderSignup');
-Route::post('/consumer/signup','Api\UserController@ConsumerSignup');
-Route::post('/provider/login-with-employee-id','Api\UserController@loginWithEmployeeID');
-
-Route::group(['middleware' => ['userLogin']], function (){
-    Route::post('login','Api\UserController@userLogin');
-});
 Route::post('forgot-password','Api\UserController@forgotPassword');
 Route::post('change-password','Api\UserController@changePassword');
 Route::post('update-phone','Api\UserController@updatePhoneNumber');
@@ -63,14 +63,4 @@ Route::post('consumer/upate-location','Api\ConsumerController@updateCurrentLocat
 Route::post('consumer/nearby-service-providers','Api\ConsumerController@nearbyServiceProviders');
 #service provider info -- consumer screen
 Route::post('consumer/service-providers-info','Api\ConsumerController@serviceProviderInfo');
-#manage jobs -- consumer screen
-Route::post('consumer/jobs/post-jobs','Api\ManageJobsController@postJobs');
-Route::post('consumer/jobs/post-jobs/post-jobs-images','Api\ManageJobsController@updatePostJobsImages');
-Route::post('consumer/jobs/fetch-proposed-jobs','Api\ManageJobsController@fetchProposedJobs');
-
-Route::post('consumer/jobs/fetch-job-details','Api\ManageJobsController@fetchProposedJobDetails');
-Route::post('consumer/manage-jobs/scheduled-jobs','Api\ManageJobsController@scheduledJobs');
-Route::post('consumer/manage-jobs/done-jobs','Api\ManageJobsController@doneJobsConsumer');
-Route::post('consumer/current-location','Api\ConsumerController@fetchCurrentLocation');
-#new jobs request -- provider screen
 

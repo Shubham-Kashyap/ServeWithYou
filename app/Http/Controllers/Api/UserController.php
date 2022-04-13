@@ -131,13 +131,7 @@ class UserController extends Controller
                 ->where('provider_id', '0')
                 // ->select('consumer_id')
                 ->get();
-            // $notification_data = [
-            //     'title'=>'Ji ayann nu ',
-
-            //     'type'=>'romeo lb gya',
-            //     'body'=>'Biree thode vaste provider lb gya hai ',
-            // ];
-            // return response()->json(['status'=>false,'message'=>[$consumer_id],'response'=>[]]);
+            
             $notification_data = [
                 'title' => 'Greetings ',
 
@@ -149,13 +143,7 @@ class UserController extends Controller
 
                     $to = User::where('id', $row->consumer_id)->first()->device_token;
                     // echo $to;
-                    Helper::sendPushNotification(Helper::firebaseServerKey(), $to, $notification_data);
-                    // echo "<br/>";
-                    //echo $row;
-
-                    // return $row->consumer_id;
-                    // print($row->consumer_id);
-                    //Helper::sendPushNotification(Helper::firebaseServerKey(),User::where('id',$row->consumer_id)->first()->device_token,$notification_data);
+                    // Helper::sendPushNotification(Helper::firebaseServerKey(), $to, $notification_data);
                 }
             }
 
@@ -514,126 +502,6 @@ class UserController extends Controller
             return response()->json(['status' => false, 'message' => 'User not found']);
         }
 
-        #login via facebook -- checklist
-        // if($request->social_login_type == 'facebook'){
-        //     if(User::where('email',$request->username)->where('social_login_type',$request->social_login_type)->first()){
-        //         if($user->email_verified_at == '0'){
-        //             return response()->json(['status'=>false,'message'=>"The consumer email is not verified","response"=>[]]);
-        //         }
-        //         if($user->is_blocked == '1'){
-        //             return response()->json(['status'=>false,'message'=>"Your account has been blocked by administator","response"=>[]]);
-        //         }
-        //         else{
-        //             if($user->role ==='consumer'){
-        //                 User::where('email',$request->username)->update(['device_token'=>$request->device_token]);
-        //                 $data = User::where('email',$request->username)->first();
-        //                 return response()->json(['status'=>true,'message'=>'consumer login via facebook succcessfull','response'=>$data]);
-        //             }
-        //             elseif($user->role ==='provider'){
-        //                 User::where('email',$request->username)->update(['device_token'=>$request->device_token]);
-        //                 $data = DB::table('users')
-        //                             ->join('user_details','users.id','=','user_details.user_id')
-        //                             ->where('users.email',$request->username)
-        //                             ->select('users.*','user_details.user_id','user_details.onboarding_status','user_details.user_role','user_details.stripe_account_id','user_details.stripe_refresh_token')
-        //                             ->first();
-        //                 return response()->json(['status'=>true,'message'=>'provider login via facebook successfull','response'=>$data]);
-        //             }
-        //             elseif($user->role ==='admin'){
-        //                 return response()->json(['status'=>false,'message'=>"Login denied ! these credentials belong to admin, you don't have permissions to login using these credentials","response"=>[]]);
-        //             }
-        //             // return response()->json(['status'=>false,'message'=>"The user email is not verified","response"=>[]]);
-        //         }
-
-        //     }
-        //    # later
-        //     // if(User::where('phone_no',$request->username)->first() and Hash::check($request->password,User::where('phone_no',$request->username)->first()->password))
-        //     // {
-
-        //     // }
-        //     else{
-        //         return response()->json(['status'=>false,'message'=>'Please select different social login type','response'=>[]]);
-        //     }
-        // }
-        // #login via google -- checklist
-        // if($request->social_login_type == 'google'){
-        //     if(User::where('email',$request->username)->where('social_login_type',$request->social_login_type)->first()){
-        //         if($user->email_verified_at == '0'){
-        //             return response()->json(['status'=>false,'message'=>"The consumer email is not verified","response"=>[]]);
-        //         }
-        //         if($user->is_blocked == '1'){
-        //             return response()->json(['status'=>false,'message'=>"Your account has been blocked by administator","response"=>[]]);
-        //         }
-        //         else{
-        //             if($user->role ==='consumer'){
-        //                 User::where('email',$request->username)->update(['device_token'=>$request->device_token]);
-        //                 $data = DB::table('users')->where('email',$request->username)->first();
-        //                 return response()->json(['status'=>true,'message'=>'consumer via google login succcessfull','response'=>$data]);
-        //             }
-        //             elseif($user->role ==='provider'){
-        //                 User::where('email',$request->username)->update(['device_token'=>$request->device_token]);
-        //                 $data = DB::table('users')
-        //                             ->join('user_details','users.id','=','user_details.user_id')
-        //                             ->where('users.email',$request->username)
-        //                             ->select('users.*','user_details.user_id','user_details.onboarding_status','user_details.user_role','user_details.stripe_account_id','user_details.stripe_refresh_token')
-        //                             ->first();
-        //                 return response()->json(['status'=>true,'message'=>'provider login via google successfull','response'=>$data]);
-        //             }
-        //             elseif($user->role ==='admin'){
-        //                 return response()->json(['status'=>false,'message'=>"Login denied ! these credentials belong to admin, you don't have permissions to login using these credentials","response"=>[]]);
-        //             }
-        //             // return response()->json(['status'=>false,'message'=>"The user email is not verified","response"=>[]]);
-        //         }
-
-        //     }
-        //     # later
-        //     // if(User::where('phone_no',$request->username)->first() and Hash::check($request->password,User::where('phone_no',$request->username)->first()->password))
-        //     // {
-
-        //     // }
-        //     else{
-        //         return response()->json(['status'=>false,'message'=>'Please select different social login type','response'=>[]]);
-        //     }
-        // }
-        // # login via apple store -- checklist
-        // if($request->social_login_type == 'apple'){
-        //     if(User::where('email',$request->username)->where('social_login_type',$request->social_login_type)->first()){
-        //         if($user->email_verified_at == '0'){
-        //             return response()->json(['status'=>false,'message'=>"The consumer email is not verified","response"=>[]]);
-        //         }
-        //         if($user->is_blocked == '1'){
-        //             return response()->json(['status'=>false,'message'=>"Your account has been blocked by administator","response"=>[]]);
-        //         }
-        //         else{
-        //             if($user->role ==='consumer'){
-        //                 User::where('email',$request->username)->update(['device_token'=>$request->device_token]);
-        //                 $data = DB::table('users')->where('email',$request->username)->first();
-        //                 return response()->json(['status'=>true,'message'=>'consumer via apple store login succcessfull','response'=>$data]);
-        //             }
-        //             elseif($user->role ==='provider'){
-        //                 User::where('email',$request->username)->update(['device_token'=>$request->device_token]);
-        //                 $data = DB::table('users')
-        //                             ->join('user_details','users.id','=','user_details.user_id')
-        //                             ->where('users.email',$request->username)
-        //                             ->select('users.*','user_details.user_id','user_details.onboarding_status','user_details.user_role','user_details.stripe_account_id','user_details.stripe_refresh_token')
-        //                             ->first();
-        //                 return response()->json(['status'=>true,'message'=>'provider login via apple store successfull','response'=>$data]);
-        //             }
-        //             elseif($user->role ==='admin'){
-        //                 return response()->json(['status'=>false,'message'=>"Login denied ! these credentials belong to admin, you don't have permissions to login using these credentials","response"=>[]]);
-        //             }
-        //             // return response()->json(['status'=>false,'message'=>"The user email is not verified","response"=>[]]);
-        //         }
-
-        //     }
-        //     # later
-        //     // if(User::where('phone_no',$request->username)->first() and Hash::check($request->password,User::where('phone_no',$request->username)->first()->password))
-        //     // {
-
-        //     // }
-        //     else{
-        //         return response()->json(['status'=>false,'message'=>'Please select different social login type','response'=>[]]);
-        //     }
-        // }
     }
     /**
      * -----------------------------------------
@@ -962,22 +830,7 @@ class UserController extends Controller
         } else {
             if ($user->role === 'consumer') {
 
-                // $data = [
-                //     'id'=>User::where('id',$request->user_id)->first()->id,
-                //     'user_id'=>UserDetails::where('user_id',$request->user_id)->first()->user_id,
-                //     'first_name'=>User::where('id',$request->user_id)->first()->first_name,
-                //     'last_name'=>User::where('id',$request->user_id)->first()->first_name,
-                //     'phone_no'=>User::where('id',$request->user_id)->first()->phone_no,
-                //     'role'=>User::where('id',$request->user_id)->first()->role,
-                //     'email'=>User::where('id',$request->user_id)->first()->email,
-                //     'email_verified_at'=>User::where('id',$request->user_id)->first()->email_verified_at,
-                //     'address'=>User::where('id',$request->user_id)->first()->address,
-                //     'image'=>url('/') . '/images/user_images/consumer/id-'.$request->user_id.'/'.UserDetails::where('user_id',$request->user_id)->first()->image,
-                // ];
-                // if(UserDetails::where('user_id',$request->user_id)->first()->image == null){
-                //     // $data['image'] = null;
-                //     $data['image']=url('/').'/images/user_images/dummy.jpg';
-                // }
+               
                 $data = DB::table('users')
                     ->join('user_details', 'user_details.user_id', '=', 'users.id')
                     ->where('user_details.user_id', $request->user_id)
@@ -1004,24 +857,7 @@ class UserController extends Controller
                 return response()->json(['status' => true, 'message' => 'Data fetched succssfull', 'response' => $data]);
             }
             if ($user->role === 'provider') {
-                // $data = [
-                //     'id'=>User::where('id',$request->user_id)->first()->id,
-                //     // 'user_id'=>UserDetails::where('user_id',$request->user_id)->first()->user_id,
-                //     'first_name'=>User::where('id',$request->user_id)->first()->first_name,
-                //     'last_name'=>User::where('id',$request->user_id)->first()->first_name,
-                //     'phone_no'=>User::where('id',$request->user_id)->first()->phone_no,
-                //     'role'=>User::where('id',$request->user_id)->first()->role,
-                //     'email'=>User::where('id',$request->user_id)->first()->email,
-                //     'email_verified_at'=>User::where('id',$request->user_id)->first()->email_verified_at,
-                //     'address'=>User::where('id',$request->user_id)->first()->address,
-                //     'state'=>User::where('id',$request->user_id)->first()->state,
-                //     'country'=>User::where('id',$request->user_id)->first()->country,
-                //     'account_number'=>User::where('id',$request->user_id)->first()->account_number,
-                //     'image'=>url('/') . '/images/user_images/provider/id-'.$request->user_id.'/'.UserDetails::where('user_id',$request->user_id)->first()->image,
-                // ];
-                // if(UserDetails::where('user_id',$request->user_id)->first()->image == null){
-                //     $data['image'] = null;
-                // }
+               
                 $data = DB::table('users')
                     ->join('user_details', 'user_details.user_id', '=', 'users.id')
                     ->where('user_details.user_id', $request->user_id)
@@ -1324,89 +1160,7 @@ class UserController extends Controller
             return response()->json(['status' => true, 'message' => 'The profile is updated successfully', 'response' => $data]);
         }
     }
-    //  help and feedback
-    public function helpAndFeedbackSupport(Request $request)
-    {
-        $val = Validator::make($request->all(), [
-            'user_id' => 'required',
-        ]);
-        if ($val->fails()) {
-            return response()->json(['status' => false, 'message' => $val->errors()->first(), 'response' => []]);
-        }
-        $user = UserDetails::where('user_id', $request->user_id)->first();
-        if (!$user) {
-            return response()->json(['status' => false, 'message' => 'User with the mentioned id does not exsist', 'response' => []]);
-        } else {
-            UserDetails::where('user_id', $request->user_id)->update(['feedback' => $request->feedback, 'description' => $request->description]);
-            return response()->json(['status' => true, 'message' => 'Your feedback is saved successfully', 'response' => $user]);
-        }
-    }
-    public function hello(Request $request)
-    {
-        $val = Validator::make($request->all(), [
-            // 'user_id'=>'required',
-        ]);
-        if ($val->fails()) {
-            return response()->json(['status' => false, 'message' => $val->errors()->first(), 'response' => []]);
-        } else {
-            $consumer_id = Jobs::where('job_category', $request->service)
-                ->join('users', 'users.id', '=', 'jobs.consumer_id')
-                ->where('provider_id', '0')
-                ->get();
-            $notification_data = [
-                'title' => 'Ji ayann nu ',
 
-                'type' => 'romeo lb gya',
-                'body' => 'Biree thode vaste provider lb gya hai ',
-            ];
-            // $notification_data = [
-            //     'title'=>'Greetings ',
-
-            //     'type'=>'provider found',
-            //     'body'=>"We've found someone matching your requirements",
-            // ];
-
-            // foreach($consumer_id as $row){
-            //     // return $row->consumer_id;
-            //     Helper::sendPushNotification(Helper::firebaseServerKey(),User::where('id',$row->consumer_id)->first()->device_token,$notification_data);
-            // }
-            foreach ($consumer_id->pluck('device_token') as $to) {
-                print($to);
-                echo '<br/>';
-                Helper::sendPushNotification(Helper::firebaseServerKey(), $to, $notification_data);
-            }
-
-            return response()->json(['status' => false, 'message' => 'it works', 'response' => $consumer_id->pluck('consumer_id')]);
-        }
-    }
-    /**
-     * -----------------------------------------------------------------------------
-     * Login with employee id
-     * -----------------------------------------------------------------------------
-     */
-    public function loginWithEmployeeID(Request $request)
-    {
-        $val = Validator::make($request->all(), [
-            'employee_id' => 'required|exists:users,employee_id',
-            // 'device_token' => 'required',
-            // 'device_type' => 'required|in:a,i'
-        ]);
-        if ($val->fails()) {
-            return response()->json(['status' => false, 'message' => $val->errors()->first(), 'response' => []]);
-        } else {
-            $auth = User::where(['employee_id' => $request->employee_id])->first();
-            if ($auth) {
-                User::where('id', $auth->id)->update(['device_token' => $request->device_token, 'device_type' => $request->device_type]);
-                $data = DB::table('users')
-                    ->join('user_details', 'users.id', '=', 'user_details.user_id')
-                    ->where('users.id', $auth->id)
-                    ->select('users.*', 'user_details.user_id', 'user_details.onboarding_status', 'user_details.user_role', 'user_details.rate', 'user_details.stripe_account_id', 'user_details.stripe_refresh_token')
-                    ->first();
-                // return response()->json(['status'=>true,'message'=>'provider login successfull','response'=>Auth::user()]);
-                return response()->json(['status' => true, 'message' => 'provider login successfull', 'response' => $data]);
-            } else {
-                return response()->json(['status' => false, 'message' => 'Invalid credentails', 'response' => []]);
-            }
-        }
-    }
+   
+    
 }
